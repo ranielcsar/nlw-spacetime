@@ -1,42 +1,35 @@
 {
   "extends": [
-    "next/core-web-vitals",
     "@rocketseat/eslint-config/react"
   ],
-  "plugins": [
-    "import"
-  ],
+  "plugins": ["import"],
   "rules": {
+    "camelcase": "off",
     "import/order": [
       "error",
       {
-        "groups": [
-          [
-            "builtin",
-            "external"
-          ],
-          [
-            "parent",
-            "sibling",
-            "index"
-          ],
-          "internal",
-          "object"
-        ],
+        "groups": [["builtin", "external"], ["parent", "sibling", "index"], "internal", "object"],
         "pathGroups": [
           {
             "pattern": "@/**",
             "group": "internal"
           }
         ],
-        "pathGroupsExcludedImportTypes": [
-          "builtin"
-        ],
+        "pathGroupsExcludedImportTypes": ["builtin"],
         "newlines-between": "always",
         "alphabetize": {
           "order": "asc",
           "caseInsensitive": true
         }
+      }
+    ],
+    "sort-imports": [
+      "error",
+      {
+        "ignoreCase": true,
+        "ignoreDeclarationSort": true,
+        "ignoreMemberSort": false,
+        "memberSyntaxSortOrder": ["none", "all", "multiple", "single"]
       }
     ]
   }
