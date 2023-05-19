@@ -1,9 +1,14 @@
 import { User } from 'lucide-react'
+import { cookies } from 'next/headers'
 import Image from 'next/image'
 
 import nlwLogo from '../assets/nlw-spacetime-logo.svg'
 
+import { Profile } from '@/components/Profile'
+
 export default function Home() {
+  const isAuthenticated = cookies().has('token')
+
   return (
     <main className="grid min-h-screen grid-cols-2">
       <section className="relative flex flex-col items-start justify-between overflow-hidden border-r border-white/10 bg-[url(../assets/bg-stars.svg)] bg-cover px-28 py-16">
@@ -11,23 +16,15 @@ export default function Home() {
 
         <BgStripes />
 
-        <SignIn />
+        {isAuthenticated ? <Profile /> : <SignIn />}
 
         <Hero />
 
-        <Footer />
+        <Copyright />
       </section>
 
       <section className="flex flex-col bg-[url(../assets/bg-stars.svg)] bg-cover p-16">
-        <div className="flex flex-1 items-center justify-center ">
-          <p className="w-[360px] text-center leading-relaxed">
-            Você ainda não registrou nenhuma lembrança, comece a{' '}
-            <a href="#" className="underline hover:text-gray-50">
-              criar agora
-            </a>
-            !
-          </p>
-        </div>
+        <EmptyMemories />
       </section>
     </main>
   )
@@ -46,7 +43,7 @@ function BgStripes() {
 function SignIn() {
   return (
     <a
-      href=""
+      href={`https://github.com/login/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID}`}
       className="flex items-center gap-3 text-left transition-colors hover:text-gray-50"
     >
       <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-400">
@@ -85,7 +82,7 @@ function Hero() {
   )
 }
 
-function Footer() {
+function Copyright() {
   return (
     <footer className="text-sm leading-relaxed text-gray-200">
       Feito com 💜 no NLW da{' '}
@@ -98,5 +95,19 @@ function Footer() {
         Rocketseat
       </a>
     </footer>
+  )
+}
+
+function EmptyMemories() {
+  return (
+    <div className="flex flex-1 items-center justify-center ">
+      <p className="w-[360px] text-center leading-relaxed">
+        Você ainda não registrou nenhuma lembrança, comece a{' '}
+        <a href="#" className="underline hover:text-gray-50">
+          criar agora
+        </a>
+        !
+      </p>
+    </div>
   )
 }
