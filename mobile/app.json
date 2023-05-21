@@ -15,6 +15,14 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "A aplicação precisa de acesso às suas imagens para você compartilhar com seus amigos."
+        }
+      ]
+    ],
     "ios": {
       "supportsTablet": true,
       "config": {
