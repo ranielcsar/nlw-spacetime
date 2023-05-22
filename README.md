@@ -11,8 +11,8 @@ Como usuário, gostaria de uma aplicação web e mobile na qual eu possa salvar 
 ### Tecnologias
 
 - **Web**
-	- NextJS
-	- React
+	- NextJS 13 (Incluindo nova pasta **app** e também **server components** do React 18)
+	- React 18
 	- Typescript
 	- TailwindCSS
 	- Axios
