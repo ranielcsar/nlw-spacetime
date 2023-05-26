@@ -2,9 +2,9 @@ import dayjs from 'dayjs'
 import ptBr from 'dayjs/locale/pt-br'
 import { ArrowRight } from 'lucide-react'
 import { cookies } from 'next/headers'
-import Image from 'next/image'
 import Link from 'next/link'
 
+import { MediaDisplay } from '@/components/MediaDisplay'
 import { api } from '@/lib/api'
 
 dayjs.locale(ptBr)
@@ -52,13 +52,7 @@ function MemoryCard({ memory }: { memory: Memory }) {
         {dayjs(memory.createdAt).format('D[ de ]MMMM[, ]YYYY')}
       </time>
 
-      <Image
-        src={memory.coverUrl}
-        alt=""
-        width={500}
-        height={280}
-        className="aspect-video w-full rounded-lg object-cover"
-      />
+      <MediaDisplay url={memory.coverUrl} />
 
       <p className="text-lg leading-relaxed text-gray-100">{memory.excerpt}</p>
 
