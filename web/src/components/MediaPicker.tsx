@@ -1,20 +1,20 @@
-'use client'
+"use client";
 
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useState } from "react";
 
 export function MediaPicker() {
-  const [preview, setPreview] = useState<string | null>(null)
+  const [preview, setPreview] = useState<string | null>(null);
 
   const onFileSelected = (event: ChangeEvent<HTMLInputElement>) => {
-    const { files } = event.target
+    const { files } = event.target;
 
     if (!files) {
-      return
+      return;
     }
 
-    const previewURL = URL.createObjectURL(files[0])
-    setPreview(previewURL)
-  }
+    const previewURL = URL.createObjectURL(files[0]);
+    setPreview(previewURL);
+  };
 
   return (
     <>
@@ -23,7 +23,7 @@ export function MediaPicker() {
         id="media"
         name="coverUrl"
         className="invisible h-0 w-0"
-        accept="image/*"
+        accept="image/*, video/*"
         onChange={onFileSelected}
       />
 
@@ -35,5 +35,5 @@ export function MediaPicker() {
         />
       )}
     </>
-  )
+  );
 }

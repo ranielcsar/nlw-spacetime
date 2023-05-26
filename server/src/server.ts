@@ -25,7 +25,7 @@ app.register(require('@fastify/static'), {
 })
 
 app.get('/', () => {
-  return { taOnline: 'tô sim' }
+  return { isOnline: true }
 })
 
 app.register(authRoutes)
