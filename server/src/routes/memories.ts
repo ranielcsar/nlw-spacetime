@@ -72,7 +72,7 @@ function updateMemory(app: FastifyInstance) {
     const bodySchema = z.object({
       content: z.string(),
       coverUrl: z.string(),
-      isPublic: z.boolean(),
+      isPublic: z.coerce.boolean().default(false),
     })
     const { content, isPublic, coverUrl } = bodySchema.parse(request.body)
 
