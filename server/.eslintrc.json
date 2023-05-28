@@ -1,10 +1,14 @@
 {
   "extends": [
-    "@rocketseat/eslint-config/node"
+    "@rocketseat/eslint-config/node",
+    "prettier"
   ],
   "plugins": [
     "import"
   ],
+  "env": {
+    "jest": true
+  },
   "rules": {
     "camelcase": "off",
     "import/order": [
