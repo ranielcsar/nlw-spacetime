@@ -3,44 +3,7 @@ import { z } from 'zod'
 
 import { prisma } from '@/lib/prisma'
 
-export async function memoriesRoutes(app: FastifyInstance) {
-  app.addHook('preHandler', async (request) => {
-    await request.jwtVerify()
-  })
-
-  app.get('/memories', async (request) => {
-    const memories = await prisma.memory.findMany({
-      where: {
-        userId: request.user.sub,
-      },
-      orderBy: {
-        createdAt: 'asc',
-      },
-    })
-
-    return memories.map((memory) => ({
-      id: memory.id,
-      coverUrl: memory.coverUrl,
-      excerpt: memory.content.substring(0, 115).concat('...'),
-      createdAt: memory.createdAt,
-    }))
-  })
-
-  app.get('/memories/:id', async (request, reply) => {
-    const paramsSchema = z.object({
-      id: z.string().uuid(),
-    })
-    const { id } = paramsSchema.parse(request.params)
-
-    const memory = await prisma.memory.findUniqueOrThrow({ where: { id } })
-
-    if (!memory.isPublic && memory.userId !== request.user.sub) {
-      return reply.status(401).send()
-    }
-
-    return memory
-  })
-
+function createMemory(app: FastifyInstance) {
   app.post('/memories', async (request) => {
     const bodySchema = z.object({
       content: z.string(),
@@ -60,7 +23,46 @@ export async function memoriesRoutes(app: FastifyInstance) {
 
     return memory
   })
+}
 
+export function getMemories(app: FastifyInstance) {
+  app.get('/memories', async (request) => {
+    const memories = await prisma.memory.findMany({
+      where: {
+        userId: request.user.sub,
+      },
+      orderBy: {
+        createdAt: 'asc',
+      },
+    })
+
+    return memories.map((memory) => ({
+      id: memory.id,
+      coverUrl: memory.coverUrl,
+      excerpt: memory.content.substring(0, 115).concat('...'),
+      createdAt: memory.createdAt,
+    }))
+  })
+}
+
+function getSpecificMemory(app: FastifyInstance) {
+  app.get('/memories/:id', async (request, reply) => {
+    const paramsSchema = z.object({
+      id: z.string().uuid(),
+    })
+    const { id } = paramsSchema.parse(request.params)
+
+    const memory = await prisma.memory.findUniqueOrThrow({ where: { id } })
+
+    if (!memory.isPublic && memory.userId !== request.user.sub) {
+      return reply.status(401).send()
+    }
+
+    return memory
+  })
+}
+
+function updateMemory(app: FastifyInstance) {
   app.put('/memories/:id', async (request, reply) => {
     const paramsSchema = z.object({
       id: z.string().uuid(),
@@ -70,7 +72,7 @@ export async function memoriesRoutes(app: FastifyInstance) {
     const bodySchema = z.object({
       content: z.string(),
       coverUrl: z.string(),
-      isPublic: z.coerce.boolean().default(false),
+      isPublic: z.boolean(),
     })
     const { content, isPublic, coverUrl } = bodySchema.parse(request.body)
 
@@ -87,7 +89,9 @@ export async function memoriesRoutes(app: FastifyInstance) {
 
     return memory
   })
+}
 
+function deleteMemory(app: FastifyInstance) {
   app.delete('/memories/:id', async (request, reply) => {
     const paramsSchema = z.object({
       id: z.string().uuid(),
@@ -100,6 +104,22 @@ export async function memoriesRoutes(app: FastifyInstance) {
       return reply.status(401).send()
     }
 
-    prisma.memory.delete({ where: { id } })
+    const sucess = await prisma.memory.delete({ where: { id } })
+
+    if (sucess) return true
+
+    return false
   })
+}
+
+export async function memoriesRoutes(app: FastifyInstance) {
+  app.addHook('preHandler', async (request) => {
+    await request.jwtVerify()
+  })
+
+  createMemory(app)
+  getMemories(app)
+  getSpecificMemory(app)
+  updateMemory(app)
+  deleteMemory(app)
 }
