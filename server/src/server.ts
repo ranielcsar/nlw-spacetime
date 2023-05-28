@@ -7,7 +7,7 @@ import 'dotenv/config'
 
 import { authRoutes, memoriesRoutes, uploadRoutes } from './routes'
 
-const app = fastify()
+export const app = fastify()
 
 app.register(cors, {
   origin: true,
