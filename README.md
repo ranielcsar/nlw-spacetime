@@ -52,7 +52,11 @@ Como usuário, gostaria de uma aplicação web e mobile na qual eu possa salvar 
 - [ ] **Mobile/Web**
 	- [ ] Criar página de detalhes da lembrança (ao clicar em ler mais)
 	- [ ] Implementar edição e deleção de uma memória específica
-	- [ ] Implementar o upload de vídeo (só funciona imagens por enquanto)
-- [ ] **Server**
-	- [ ] Implementar a rota de upload de vídeo (só funciona imagens por enquanto)
-- [ ] Implementar testes
+	- [x] Implementar o upload de vídeo (só funciona imagens por enquanto)
+- [x] **Server**
+	- [x] Implementar a rota de upload de vídeo (só funciona imagens por enquanto)
+- [ ] **Testes**
+	- [ ] server
+		- [x] memory crud
+		- [ ] auth
+		- [ ] upload
