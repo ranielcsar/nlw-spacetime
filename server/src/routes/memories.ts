@@ -104,9 +104,9 @@ function deleteMemory(app: FastifyInstance) {
       return reply.status(401).send()
     }
 
-    const sucess = await prisma.memory.delete({ where: { id } })
+    const success = await prisma.memory.delete({ where: { id } })
 
-    if (sucess) return true
+    if (success) return true
 
     return false
   })
