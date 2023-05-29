@@ -1,5 +1,5 @@
 # Prisma
-prisma/*.db
+prisma/dev.db
 
 # Node.js
 node_modules/
