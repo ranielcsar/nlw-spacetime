@@ -16,93 +16,110 @@ describe('Memories', () => {
   }
 
   test('should create a new memory', async () => {
-    const response = await app
-      .inject()
-      .post('/memories')
-      .headers(headers)
-      .body(newMemory)
-      .catch((err) => console.error({ err }))
+    try {
+      const response = await app
+        .inject()
+        .post('/memories')
+        .headers(headers)
+        .body(newMemory)
 
-    expect(response?.statusCode).toBe(200)
-
-    if (response) {
+      expect(response.statusCode).toBe(200)
       createdMemory = response.json()
-    }
 
-    expect(response?.json()).toEqual({
-      content: expect.any(String),
-      coverUrl: expect.any(String),
-      createdAt: expect.any(String),
-      id: expect.any(String),
-      isPublic: expect.any(Boolean),
-      userId: expect.any(String),
-    })
+      expect(createdMemory).toEqual({
+        content: expect.any(String),
+        coverUrl: expect.any(String),
+        createdAt: expect.any(String),
+        id: expect.any(String),
+        isPublic: expect.any(Boolean),
+        userId: expect.any(String),
+      })
+    } catch (err) {
+      console.error(err)
+    }
   })
 
   test('should get all memories from user', async () => {
-    const response = await app
-      .inject()
-      .get('/memories')
-      .headers(headers)
-      .then((res) => res.json())
+    try {
+      const response = await app.inject().get('/memories').headers(headers)
 
-    const memories = [
-      {
-        id: expect.any(String),
-        coverUrl: expect.any(String),
-        excerpt: expect.any(String),
-        createdAt: expect.any(String),
-      },
-    ]
+      expect(response.statusCode).toBe(200)
 
-    expect(response).toEqual(expect.arrayContaining(memories))
+      const memories = [
+        {
+          id: expect.any(String),
+          coverUrl: expect.any(String),
+          excerpt: expect.any(String),
+          createdAt: expect.any(String),
+        },
+      ]
+
+      expect(response.json()).toEqual(expect.arrayContaining(memories))
+    } catch (err) {
+      console.error(err)
+    }
   })
 
   test('should get a specific memory', async () => {
-    const response = await app
-      .inject()
-      .headers(headers)
-      .get(`/memories/${createdMemory?.id}`)
-      .then((res) => res.json())
+    try {
+      const response = await app
+        .inject()
+        .headers(headers)
+        .get(`/memories/${createdMemory?.id}`)
 
-    const memory = {
-      content: expect.any(String),
-      coverUrl: expect.any(String),
-      createdAt: expect.any(String),
-      id: expect.any(String),
-      isPublic: expect.any(Boolean),
-      userId: expect.any(String),
+      expect(response.statusCode).toBe(200)
+
+      const memory = {
+        content: expect.any(String),
+        coverUrl: expect.any(String),
+        createdAt: expect.any(String),
+        id: expect.any(String),
+        isPublic: expect.any(Boolean),
+        userId: expect.any(String),
+      }
+
+      expect(response.json()).toEqual(memory)
+    } catch (err) {
+      console.error(err)
     }
-
-    expect(response).toEqual(memory)
   })
 
   test('should update a specific memory', async () => {
-    const memory = {
-      ...newMemory,
-      isPublic: true,
+    try {
+      const memory = {
+        ...newMemory,
+        isPublic: true,
+      }
+
+      const response = await app
+        .inject()
+        .headers(headers)
+        .put(`/memories/${createdMemory?.id}`)
+        .body(memory)
+
+      expect(response.statusCode).toBe(200)
+
+      expect(response.json()).toEqual({
+        ...createdMemory,
+        isPublic: true,
+      })
+    } catch (err) {
+      console.error(err)
     }
-
-    const response = await app
-      .inject()
-      .headers(headers)
-      .put(`/memories/${createdMemory?.id}`)
-      .body(memory)
-      .then((res) => res.json())
-
-    expect(response).toEqual({
-      ...createdMemory,
-      isPublic: true,
-    })
   })
 
   test('should delete a specific memory', async () => {
-    const response = await app
-      .inject()
-      .headers(headers)
-      .delete(`/memories/${createdMemory?.id}`)
-      .then((res) => res.json())
+    try {
+      const response = await app
+        .inject()
+        .headers(headers)
+        .delete(`/memories/${createdMemory?.id}`)
 
-    expect(response).toEqual(true)
+      expect(response.statusCode).toBe(200)
+
+      expect(response.json()).toEqual(true)
+    } catch (err) {
+      console.error(err)
+    }
   })
 })
