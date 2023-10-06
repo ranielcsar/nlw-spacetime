@@ -5,7 +5,7 @@ import { NewMemoryForm } from './NewMemoryForm'
 
 export default function NewMemory() {
   return (
-    <section className="flex flex-1 flex-col gap-4 p-16">
+    <section className="flex flex-1 flex-col gap-4 p-4 lg:p-16">
       <Link
         href="/"
         className="flex items-center gap-1 text-sm text-gray-200 hover:text-gray-100"

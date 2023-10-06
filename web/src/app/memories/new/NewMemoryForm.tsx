@@ -42,15 +42,18 @@ export function NewMemoryForm() {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      },
+      }
     )
 
     router.push('/')
   }
 
   return (
-    <form className="flex flex-1 flex-col gap-2" onSubmit={handleCreateMemory}>
-      <section className="flex items-center gap-4">
+    <form
+      className="flex h-[80vh] flex-col gap-4 lg:flex-1"
+      onSubmit={handleCreateMemory}
+    >
+      <section className="my-2 flex flex-col gap-4 lg:m-0 lg:flex-row lg:items-center">
         <label
           htmlFor="media"
           className="flex cursor-pointer items-center gap-1.5 text-sm text-gray-200 hover:text-gray-100"
@@ -78,7 +81,7 @@ export function NewMemoryForm() {
       <textarea
         name="content"
         spellCheck={false}
-        className="resize-noe w-full flex-1 rounded border-0 bg-transparent p-0 text-lg leading-relaxed text-gray-100 placeholder:text-gray-400 focus:ring-0"
+        className="w-full flex-1 resize-none rounded border-0 bg-gray-800/60 p-2 text-lg leading-relaxed text-gray-100 placeholder:text-gray-400 focus:ring-0"
         placeholder="Fique livre para adicionar fotos, vídeos e relatos sobre essa experiência que você quer lembrar para sempre."
       />
 
