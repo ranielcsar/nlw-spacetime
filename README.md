@@ -48,7 +48,7 @@ Como usuário, gostaria de uma aplicação web e mobile na qual eu possa salvar 
 
 ### Desafios e Melhorias Futuras:
 
-- [ ] Deixar o layout da Web responsivo
+- [x] Deixar o layout da Web responsivo
 - [ ] **Mobile/Web**
 	- [ ] Criar página de detalhes da lembrança (ao clicar em ler mais)
 	- [ ] Implementar edição e deleção de uma memória específica
