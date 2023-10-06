@@ -24,7 +24,7 @@ export async function authRoutes(app: FastifyInstance) {
         headers: {
           Accept: 'application/json',
         },
-      },
+      }
     )
 
     const { access_token } = accessTokenResponse.data
@@ -69,7 +69,7 @@ export async function authRoutes(app: FastifyInstance) {
       {
         sub: user.id,
         expiresIn: '30 days',
-      },
+      }
     )
 
     return {
